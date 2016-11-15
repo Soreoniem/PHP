@@ -1,0 +1,14 @@
+{% extends ":calculadora:index.html.twig" %}
+{% block title %}{{ parent() }}: {{ titulo }}{% endblock %}
+{% block body %}
+	<h1>{{ titulo }}</h1>
+	
+	<form action="{{ path(action) }}" method="post">
+		<input type="number" name="op1" autofocus tabindex="1"/><br/>
+		{{ operando }}<br/>
+		<input type="number" name="op2" tabindex="2"/><br/>
+		<input type="submit" value="Aceptar" tabindex="3"/>
+	</form>
+{% endblock %}
+
+{% block pie %}{{ parent() }}{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Calculadora{% endblock %}
+
+{% block body %}
+	<h1>Calculadora</h1>
+	<ul>
+		<li><a href="{{ path("app_calculadora_sumar") }}">Sumar</a></li>
+		<li><a href="{{ path("app_calculadora_restar") }}">Restar</a></li>
+		<li><a href="{{ path("app_calculadora_multiplicar") }}">Multiplicar</a></li>
+		<li><a href="{{ path("app_calculadora_dividir") }}">Dividir</a></li>
+	</ul>
+{% endblock %}
+
+{% block pie %}
+	<p id="pie">
+		Volver a <a href="{{ path("app_calculadora_index") }}">Calculadora</a>
+	</p>
+{% endblock %}
