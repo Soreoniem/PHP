@@ -1,0 +1,15 @@
+<?php require "application/layouts/cabecera.html"; ?>
+
+	<h2><?php echo substr($action, 2); ?></h2>
+
+	<form action="/index.php?controller=calculadora&action=<?php echo $action; ?>">
+		Numerador 1:<span style="padding-left:2em;"></span><input type="number" name="num1"/><br/>
+		Denominador 1:<span style="padding-left:1em;"></span><input type="number" name="den1"/><br/>
+
+		<span style="padding-left:2em;"></span><?php echo $operador; ?><br/>
+
+		Numerador 1:<span style="padding-left:2em;"></span><input type="number" name="num2"/><br/>
+		Denominador 1:<span style="padding-left:1em;"></span><input type="number" name="den2"/>
+	</form>
+
+<?php require "application/layouts/pie.html"; ?>

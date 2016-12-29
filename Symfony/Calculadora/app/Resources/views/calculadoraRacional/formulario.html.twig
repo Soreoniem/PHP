@@ -1,0 +1,78 @@
+{% extends ":calculadoraRacional:index.html.twig" %}
+
+{% block titulo_head %}{{ parent() }} ► {{ titulo }}{% endblock %}
+
+{% block cabecera %}
+	<h1>
+		{% block cabecera_Titulo %}
+			<a href="{{ path('app_calculadoraRacional_index') }}">{{ parent() }}</a>
+		{% endblock %}
+		{% block cabecera_Titulo_RutaExtra %}
+			{{ parent() }} {{ titulo }}
+		{% endblock %}
+	</h1>
+{% endblock %}
+{% block contenedor %}
+	<form id="formUsuario" action="{{ path(action) }}" method="post">
+		
+		<!-- Racional 1 -->
+		<div id="formDivIzquierdo">
+			1r Racional<br/>
+			
+			<!-- Numerador -->
+			<input autofocus type="number" name="operador1_Numerador" placeholder="Numerador 1" tabindex="1"/><br/>
+			{{ operando }}<br/>
+			
+			<!-- Denominador -->
+			<input type="number" name="operador1_Denominador" placeholder="Denominador 1" tabindex="2"/>
+		</div>
+		
+		<!-- Operador -->
+		<div id="formDivOperadorRacional">
+			{{ operandoRacional }}
+		</div>
+		
+		<!-- Racional 2 -->
+		<div id="formDivDerecho">
+			2º Racional<br/>
+			
+			<!-- Numerador -->
+			<input autofocus type="number" name="operador2_Numerador" placeholder="Numerador 2" tabindex="3"/><br/>
+			{{ operando }}<br/>
+			
+			<!-- Denominador -->
+			<input type="number" name="operador2_Denominador" placeholder="Denominador 2" tabindex="4"/>
+		</div>
+		
+		<!-- Aceptar -->
+		<div id="formDivAceptar">
+			<input type="submit" value="Aceptar" tabindex="5">
+		</div>
+	</form>
+{% endblock %}
+
+{% block estilos %}
+	#formCalculadoraRacional div{
+		width: 40%;
+	}
+	#formDivIzquierdo{
+		float: left;
+	}
+	#formDivOperadorRacional{
+		margin-top: 25px;
+		float: left;
+		width: 20% !important;
+		font-size: 2.0em;
+	}
+	#formDivDerecho{
+		float: right;
+	}
+	#formDivAceptar{
+		width: 100% !important;
+		float: left;
+	}
+	#pie{
+		width: 100%;
+		float: left;
+	}
+{% endblock %}

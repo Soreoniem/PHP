@@ -52,8 +52,9 @@ class Circulo extends Figura
 
     public function esIgual(Figura $circulo2){
         $circulo2 = (object) $circulo2;
-        return ( parent::esIgual( $circulo2 )
-                && $this->getRadio() == $circulo2->getRadio());
+		
+        return parent::esIgual( $circulo2 )
+                && $this->getRadio() == $circulo2->getRadio();
     }
 
     public function perimetro(){

@@ -1,0 +1,143 @@
+{% extends "base.html.twig" %}
+
+{% block titulo_head %}Usuario{% endblock %}
+
+{% block cabecera %}
+	<h1>{% block cabecera_Titulo %}Usuario{% endblock %}</h1>
+{% endblock %}
+
+{% block contenedor %}
+	<h2>Usuarios creados</h2>
+	<div class="row">
+		
+		{% set contador = 0 %}
+	{% for usuario in usuarios %}
+		{% set contador = contador +1 %}
+		
+		<!-- Si el anterior es divisible entre 4 está al inicio de la fila -->
+		{% if (contador -1) is divisible by(4) %}
+			<div class="row">
+		{% endif %}
+		<div class="col-xs-3 usuario">
+			<div class="nombre">
+				
+				{{ usuario.nombre }}
+				
+			</div>
+			<div class="email">
+				{{ usuario.email }}
+			</div>
+			<div class="modUsuario">
+				<div class="modUsuEditar">
+					<a href="{{ path("app_usuario_actualizar", {"id": usuario.id}) }}">🔨</a>
+				</div>
+				<div class="modUsuEliminar">
+					<a href="{{ path("app_usuario_eliminar", {"id": usuario.id}) }}">💀</a>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Si es divisible entre 4 está al final de la fila -->
+		{% if contador is divisible by(4) %}
+			</div>
+		{% endif %}
+	{% endfor %}
+	</div>
+	
+	<!-- Nuevo Usuario -->
+	<div class="col-xs-3 usuario">
+		<form id="formNuevoUsuario" action="{{ path("app_usuario_nuevo") }}" method="post">
+			<!--Nombre-->
+			<div>
+				<input class="sinFondo" type="text" name="nuevoNombre" placeholder="Nombre" tabindex="1"/>
+			</div>
+			
+			<!-- Email -->
+			<div>
+				<input class="sinFondo" type="text" name="nuevoEmail" placeholder="email@gmail.com" tabindex="2"/>
+			</div>
+			
+			<!-- Password -->
+			<div>
+				<input class="sinFondo" type="password" tipo="password" name="nuevoPassword" placeholder="Contraseña" tabindex="3"/>
+				{% block html_mostrarPassword %}{{ parent() }}{% endblock %}
+			</div>
+		
+		<!-- Aceptar -->
+		<div class="modUsuario">
+			<input type="submit" value="👌" tabindex="4">
+		</div>
+		</form>
+	</div>
+{% endblock %}
+
+{% block pie %}
+	<div id="pie">
+		Volver a <a href="{{ path('app_default_index') }}">Index</a>
+	</div>
+{% endblock %}
+{% block estilos %}
+	.usuario{
+		background-color:	rgba(224, 255, 224, 0.5);
+		border:				solid 1px rgba(200, 255, 200, 0.75);
+		border-radius:		7px 7px 3px 3px;
+	
+		width:				20%;
+		margin-top:			10px	!important;
+		margin-bottom:		5px		!important;
+		margin-left:		4%		!important;
+	}
+		/* Primer div */
+		.usuario > div:first-child {
+			margin-top: 5px;
+		}
+	.cambio{
+		float: left;
+		
+	
+	}
+	.modUsuario{
+		border-top:		dashed 1px rgba(128, 255, 128, 0.5);
+		padding-top:	3px	!important;
+		margin-top:		3px	!important;
+		margin-bottom:	5px	!important;
+	}
+		.modUsuario a {
+			font-size:			1.2em;
+			border-bottom:		none;
+			text-decoration:	none;
+		}
+			.modUsuario a:hover,
+			.modUsuario a:active {
+				border-bottom:		none;
+				text-decoration:	none;
+			}
+			.modUsuario a:hover{
+				font-size:	1.5em;
+			}
+			.modUsuario a:active {
+				font-size:	1.7em;
+			}
+	
+	.modUsuEditar,
+	.modUsuEliminar{
+		float:		left;
+		width: 50%;
+	}
+	
+	#pie{
+		float:	left;
+		width:	100%;
+	}
+	
+	/*Input sin fondo*/
+	.sinFondo {
+		background:	transparent;
+		max-width:	95%;
+		border:		solid 1px rgba(124, 175, 124, 0.20);
+	}
+	.sinFondo:hover {
+		background:	transparent;
+		border:		solid 1px rgba(124, 175, 124, 0.30);
+	}
+{% endblock %}

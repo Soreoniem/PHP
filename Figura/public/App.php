@@ -1,9 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Juan Lux
- * Date: 23/09/2016
- * Time: 17:59
+ * Creado con PhpStorm.
+ * Usuario: Juan Lux
+ * Fecha: 23/09/2016
+ * Hora: 17:59
  */
 
 namespace AppFigura;
@@ -19,7 +19,7 @@ use Modelo\Triangulo;   require_once '../Modelo/Triangulo.php';
 
 class App
 {
-    public static function run(){
+    public static function run(){   
 // VARIABLES
     // variables
         $numObjetos = 2 ;                       // Cantidad de objetos (máximo 2)

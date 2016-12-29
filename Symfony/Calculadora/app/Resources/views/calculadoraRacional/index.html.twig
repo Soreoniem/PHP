@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block titulo_head %}Calculadora Racional{% endblock %}
+
+{% block cabecera %}
+	<h1>{% block cabecera_Titulo %}Calculadora Racional{% endblock %}</h1>
+{% endblock %}
+
+{% block contenedor %}
+	<ul>
+		<li><a href="{{ path('app_calculadoraRacional_sumar') }}">Sumar</a></li>
+		<li><a href="{{ path('app_calculadoraRacional_restar') }}">Restar</a></li>
+		<li><a href="{{ path('app_calculadoraRacional_multiplicar') }}">Multiplicar</a></li>
+		<li><a href="{{ path('app_calculadoraRacional_dividir') }}">Dividir</a></li>
+	</ul>
+{% endblock %}
+
+{% block pie %}
+	Volver a <a href="{{ path('app_default_index') }}">Index</a>
+{% endblock %}

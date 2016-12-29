@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block titulo_head %}Productos{% endblock %}
+
+{% block cabecera %}
+	{{ parent() }}
+{% endblock %}
+{% block cabecera_Titulo %}Productos{% endblock %}
+
+{% block contenedor %}
+	<h2>Listado de productos</h2>
+	<div style="text-align: left;">
+		{% for producto in productos %}
+			<br/>
+			<br/>
+			Nº: {{ producto.id }}<br/>
+			Nombre: {{ producto.nombre }}<br/>
+			Précio: {{ producto.precio }}€<br/>
+			Descripción: {{ producto.descripcion }}<br/>
+			Creado: {{ producto.createdAt | date("d/F/Y H:i:s") }}<br/>
+			Actualizado: {{ producto.updatedAt | date("d/F/Y H:i:s") }}
+			<!--path("app_", {'id', })-->
+		{% endfor %}
+	</div>
+{% endblock %}

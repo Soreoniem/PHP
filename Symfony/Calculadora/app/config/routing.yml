@@ -1,9 +1,23 @@
 app:
-    resource: "@AppBundle/Controller/DefaultController.php"
-    type:     annotation
+  resource: "@AppBundle/Controller/DefaultController.php"
+  type:     annotation
 
 calculadora:
-    resource: "@AppBundle/Controller/CalculadoraController.php"
-    type:     annotation
-    prefix: /calculadora
+  resource: "@AppBundle/Controller/CalculadoraController.php"
+  type:     annotation
+  prefix:   /calculadora
 
+calculadoraRacional:
+  resource: "@AppBundle/Controller/CalculadoraRacionalController.php"
+  type:     annotation
+  prefix:   /calculadoraRacional
+
+usuario:
+  resource: "@AppBundle/Controller/UsuarioController.php"
+  type:     annotation
+  prefix:   /usuarios
+
+app.producto:
+  resource: "@AppBundle/Controller/ProductoController.php"
+  type:     annotation
+  prefix:   /productos

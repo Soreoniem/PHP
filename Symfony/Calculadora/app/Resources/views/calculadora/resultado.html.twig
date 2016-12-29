@@ -1,11 +1,30 @@
 {% extends ":calculadora:index.html.twig" %}
-{% block title %}{{ parent() }}: Resultado{% endblock %}
-{% block body %}
-	<h1>Resultado</h1>
-	
-	<p>
-		El resultado de la {{ frase }} de {{ op1 }} {{ operador }} {{ op2 }} es {{ resultado }}.
-	</p>
+
+{% block titulo_head %}Resultado{% endblock %}
+
+{% block cabecera %}
+	<h1>
+		{% block cabecera_Titulo %}
+			<a href="{{ path('app_calculadora_index') }}">{{ parent() }}</a>
+		{% endblock %}
+		{% block cabecera_Titulo_RutaExtra %}
+			{{ parent() }} <a href="{{ path(rutaOperacionActual) }}">{{ titulo }}</a> {{ random(arrayFlechas) }} Resultado
+		{% endblock %}
+	</h1>
 {% endblock %}
 
-{% block pie %}{{ parent() }}{% endblock %}
+{% block contenedor %}
+	<h3>Operación</h3>
+	<div>
+		{{ operador1 }} {{ operando }} {{ operador2 }}
+	</div>
+	
+	<h3>Resultado</h3>
+	<div>
+		{{ resultado }}
+	</div>
+{% endblock %}
+{% block pie %}
+	Volver a <a href="{{ path(rutaOperacionActual) }}">{{ titulo }}</a><br/>
+	{{ parent() }}
+{% endblock %}

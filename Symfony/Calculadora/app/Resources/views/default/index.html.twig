@@ -1,17 +1,15 @@
-{% extends 'base.html.twig' %}
+{% extends "base.html.twig" %}
 
-{% block title %}Index{% endblock %}
+{% block titulo_head %}Index{% endblock %}
 
-{% block body %}
-    <h1>Index</h1>
-    <ul>
-        <li><a href="{{ path('app_calculadora_index') }}">Calculadora</a></li>
-    </ul>
+{% block cabecera %}
+	<h1>{% block cabecera_Titulo %}Index{% endblock %}</h1>
 {% endblock %}
 
-{% block stylesheets %}
-    li a{
-        text-decoration:    none;
-        color: #000099;
-    }
+{% block contenedor %}
+	<ul>
+		<li><a href="{{ path("app_calculadora_index") }}">Calculadora</a></li>
+		<li><a href="{{ path('app_calculadoraRacional_index') }}">Calculadora Racional (⅟)</a></li>
+		<li><a href="{{ path("app_usuario_index") }}">🛠 Usuarios 🛠</a></li>
+	</ul>
 {% endblock %}

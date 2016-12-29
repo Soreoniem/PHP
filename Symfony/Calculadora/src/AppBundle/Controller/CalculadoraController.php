@@ -1,35 +1,59 @@
 <?php
+/**
+ * Creado con PhpStorm.
+ * Usuario: Juan Lux
+ * Fecha: 18/11/2016
+ * Hora: 17:43
+ */
 
 namespace AppBundle\Controller;
 
+
 use AppBundle\Service\CalculadoraService;
+use AppBundle\Service\RacionalService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
-class CalculadoraController extends Controller
-{
+class CalculadoraController extends Controller {
+//╔═════  ATRIBUTOS  ═════╗
+	/**
+	 * @var CalculadoraService
+	 */
+	protected $calculadora;
+	
+//╔═════  CONSTRUCTOR  ═════╗
+	/**
+	 * CalculadoraController constructor.
+	 */
+	public function __construct(){
+		$this->calculadora	= new CalculadoraService();
+	}
+	
+//╔═════  INDEX  ═════╗
 	/**
 	 * @Route(
-	 *     path = "/",
-	 *     name = "app_calculadora_index"
+	 *     path	= "/",
+	 *     name	= "app_calculadora_index"
 	 * )
-	 * @return Response
+	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
 	public function indexAction(){
+	 // Resultado
 		return $this->render(":calculadora:index.html.twig");
 	}
 	
+//╔═════  SUMAR  ═════╗
 	/**
 	 * @Route(
-	 *     path = "/sumar",
-	 *     name = "app_calculadora_sumar"
+	 *     path	= "/sumar",
+	 *     name	= "app_calculadora_sumar"
 	 * )
-	 * @return Response
+	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
 	public function sumarAction(){
-		return $this->render(":calculadora:form.html.twig",[
+	 // Resultado
+		return $this->render(":calculadora:formulario.html.twig",[
 			"action"	=> "app_calculadora_doSumar",
 			"titulo"	=> "Sumar",
 			"operando"	=> "➕"
@@ -42,35 +66,45 @@ class CalculadoraController extends Controller
 	 *     name    = "app_calculadora_doSumar"
 	 * )
 	 * @param Request $request
-	 * @return Response
+	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
 	public function doSumarAction(Request $request){
-		$op1	= $request->request->get("op1");
-		$op2	= $request->request->get("op2");
+	 // Datos
+		$operador1		= $request->request->get("operador1");
+		$operador2		= $request->request->get("operador2");
 		
-		$calculadora	= new CalculadoraService($op1, $op2);
+	 // Operaciones
+		$this->calculadora
+			->setOperador1(new RacionalService($operador1))
+			->setOperador2(new RacionalService($operador2))
+			->sumar();
 		
-		$calculadora->sumar();
-		$resultado	= $calculadora->getResultado();
 		
-		return $this->render(":calculadora:resultado.html.twig", [
-			"frase"		=> "suma",
-			"op1"		=> $op1,
-			"operador"	=> "➕",
-			"op2"		=> $op2,
-			"resultado"	=> $resultado
+	 // Resultado
+		$resultado	= $this->calculadora->getResultado()->getNumerador();
+		
+	 // Vista
+		return $this->render(":calculadora:resultado.html.twig",[
+			"titulo"				=> "Sumar",
+			"rutaOperacionActual"	=> "app_calculadora_sumar",
+			"operador1"				=> $operador1,
+			"operador2"				=> $operador2,
+			"operando"				=> "➕",
+			"resultado"				=> $resultado
 		]);
 	}
 	
+//╔═════  RESTAR  ═════╗
 	/**
 	 * @Route(
-	 *     path = "/restar",
-	 *     name = "app_calculadora_restar"
+	 *     path	= "/restar",
+	 *     name	= "app_calculadora_restar"
 	 * )
-	 * @return Response
+	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
 	public function restarAction(){
-		return $this->render(":calculadora:form.html.twig",[
+	 // Resultado
+		return $this->render(":calculadora:formulario.html.twig",[
 			"action"	=> "app_calculadora_doRestar",
 			"titulo"	=> "Restar",
 			"operando"	=> "➖"
@@ -83,35 +117,43 @@ class CalculadoraController extends Controller
 	 *     name    = "app_calculadora_doRestar"
 	 * )
 	 * @param Request $request
-	 * @return Response
+	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
 	public function doRestarAction(Request $request){
-		$op1	= $request->request->get("op1");
-		$op2	= $request->request->get("op2");
+	 // Datos
+		$operador1		= $request->request->get("operador1");
+		$operador2		= $request->request->get("operador2");
 		
-		$calculadora	= new CalculadoraService($op1, $op2);
+	 // Operaciones
+		$this->calculadora
+			->setOperador1(new RacionalService($operador1))
+			->setOperador2(new RacionalService($operador2))
+			->restar();
 		
-		$calculadora->restar();
-		$resultado	= $calculadora->getResultado();
+	 // Resultado
+		$resultado	= $this->calculadora->getResultado()->getNumerador();
 		
-		return $this->render(":calculadora:resultado.html.twig", [
-			"frase"		=> "resta",
-			"op1"		=> $op1,
-			"operador"	=> "➖",
-			"op2"		=> $op2,
-			"resultado"	=> $resultado
+		return $this->render(":calculadora:resultado.html.twig",[
+			"titulo"				=> "Restar",
+			"rutaOperacionActual"	=> "app_calculadora_restar",
+			"operador1"				=> $operador1,
+			"operador2"				=> $operador2,
+			"operando"				=> "➖",
+			"resultado"				=> $resultado
 		]);
 	}
 	
+//╔═════  MULTIPLICAR  ═════╗
 	/**
 	 * @Route(
-	 *     path = "/multiplicar",
-	 *     name = "app_calculadora_multiplicar"
+	 *     path	= "/multiplicar",
+	 *     name	= "app_calculadora_multiplicar"
 	 * )
-	 * @return Response
+	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
 	public function multiplicarAction(){
-		return $this->render(":calculadora:form.html.twig",[
+	 // Resultado
+		return $this->render(":calculadora:formulario.html.twig",[
 			"action"	=> "app_calculadora_doMultiplicar",
 			"titulo"	=> "Multiplicar",
 			"operando"	=> "✖"
@@ -124,35 +166,43 @@ class CalculadoraController extends Controller
 	 *     name    = "app_calculadora_doMultiplicar"
 	 * )
 	 * @param Request $request
-	 * @return Response
+	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
 	public function doMultiplicarAction(Request $request){
-		$op1	= $request->request->get("op1");
-		$op2	= $request->request->get("op2");
+	 // Datos
+		$operador1		= $request->request->get("operador1");
+		$operador2		= $request->request->get("operador2");
 		
-		$calculadora	= new CalculadoraService($op1, $op2);
+	 // Operaciones
+		$this->calculadora
+			->setOperador1(new RacionalService($operador1))
+			->setOperador2(new RacionalService($operador2))
+			->multiplicar();
 		
-		$calculadora->multiplicar();
-		$resultado	= $calculadora->getResultado();
+	 // Resultado
+		$resultado	= $this->calculadora->getResultado()->getNumerador();
 		
-		return $this->render(":calculadora:resultado.html.twig", [
-			"frase"		=> "multiplicación",
-			"op1"		=> $op1,
-			"operador"	=> "✖",
-			"op2"		=> $op2,
-			"resultado"	=> $resultado
+		return $this->render(":calculadora:resultado.html.twig",[
+			"titulo"				=> "Multiplicar",
+			"rutaOperacionActual"	=> "app_calculadora_multiplicar",
+			"operador1"				=> $operador1,
+			"operador2"				=> $operador2,
+			"operando"				=> "✖",
+			"resultado"				=> $resultado
 		]);
 	}
 	
+//╔═════  DIVIDIR  ═════╗
 	/**
 	 * @Route(
-	 *     path = "/dividir",
-	 *     name = "app_calculadora_dividir"
+	 *     path	= "/dividir",
+	 *     name	= "app_calculadora_dividir"
 	 * )
-	 * @return Response
+	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
 	public function dividirAction(){
-		return $this->render(":calculadora:form.html.twig",[
+	 // Resultado
+		return $this->render(":calculadora:formulario.html.twig",[
 			"action"	=> "app_calculadora_doDividir",
 			"titulo"	=> "Dividir",
 			"operando"	=> "➗"
@@ -165,23 +215,29 @@ class CalculadoraController extends Controller
 	 *     name    = "app_calculadora_doDividir"
 	 * )
 	 * @param Request $request
-	 * @return Response
+	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
 	public function doDividirAction(Request $request){
-		$op1	= $request->request->get("op1");
-		$op2	= $request->request->get("op2");
+	 // Datos
+		$operador1		= $request->request->get("operador1");
+		$operador2		= $request->request->get("operador2");
 		
-		$calculadora	= new CalculadoraService($op1, $op2);
+	 // Operaciones
+		$this->calculadora
+			->setOperador1(new RacionalService($operador1))
+			->setOperador2(new RacionalService($operador2))
+			->dividir_Decimal();
 		
-		$calculadora->dividir();
-		$resultado	= $calculadora->getResultado();
+	 // Resultado
+		$resultado	= $this->calculadora->getResultado()->getNumerador();
 		
-		return $this->render(":calculadora:resultado.html.twig", [
-			"frase"		=> "división",
-			"op1"		=> $op1,
-			"operador"	=> "➗",
-			"op2"		=> $op2,
-			"resultado"	=> $resultado
+		return $this->render(":calculadora:resultado.html.twig",[
+			"titulo"				=> "Dividir",
+			"rutaOperacionActual"	=> "app_calculadora_dividir",
+			"operador1"				=> $operador1,
+			"operador2"				=> $operador2,
+			"operando"				=> "➗",
+			"resultado"				=> $resultado
 		]);
 	}
 }

@@ -11,10 +11,9 @@ namespace Modelo;
 require_once 'Punto.php';
 require_once 'Figura.php';
 
-class Cuadrado extends Figura
-{
+class Cuadrado extends Figura {
 //╔═════  ATRIBUTOS  ═════╗
-    private $anchura;
+    protected $anchura;
 
 //╔═════  CONSTRUCTOR  ═════╗
     public function __construct($anchura){
@@ -46,8 +45,8 @@ class Cuadrado extends Figura
             $this->setAnchura( $this->getAnchura() / abs($num) );
         }
     }
-
-    public function esIgual(Figura $cuadrado2){
+	
+	public function esIgual(Figura $cuadrado2){
         $cuadrado2 = (object) $cuadrado2;
         return ( parent::esIgual( $cuadrado2 )
             && $this->getAnchura() == $cuadrado2->getAnchura() );

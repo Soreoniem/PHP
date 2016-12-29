@@ -1,0 +1,65 @@
+{% extends ":calculadoraRacional:index.html.twig" %}
+
+{% block titulo_head %}Resultado{% endblock %}
+
+{% block cabecera %}
+	<h1>
+		{% block cabecera_Titulo %}
+			<a href="{{ path('app_calculadoraRacional_index') }}">{{ parent() }}</a>
+		{% endblock %}
+		{% block cabecera_Titulo_RutaExtra %}
+			{{ parent() }} <a href="{{ path(rutaOperacionActual) }}"> {{ titulo }} </a> {{ random(arrayFlechas) }} Resultado
+		{% endblock %}
+	</h1>
+{% endblock %}
+
+{% block contenedor %}
+	<h2>Operación</h2>
+	
+	<div id="divRacionalResultado1">
+		<h3>Racional 1<span class="sumar">{{ operandoRacional }}</span></h3>
+			{{ operador1_Numerador }}<br/>
+			{{ operando }}<br/>
+			{{ operador1_Denominador }}
+	</div>
+		
+	<div id="divRacionalResultado2">
+		<h3>Racional 2</h3>
+			{{ operador2_Numerador }}<br/>
+			{{ operando }}<br/>
+			{{ operador2_Denominador }}
+	</div>
+	
+	<h2>Resultado</h2>
+			{{ resultado_Numerador }}<br/>
+			{{ operando }}<br/>
+			{{ resultado_Denominador }}
+{% endblock %}
+{% block pie %}
+	Volver a <a href="{{ path(rutaOperacionActual) }}">{{ titulo }}</a><br/>
+	{{ parent() }}
+{% endblock %}
+
+{% block estilos %}
+	.sumar{
+		float: right;
+		right: 0px;
+		font-size: 1.5em;
+		margin-left: -100%;
+	}
+	h2{
+		float: left;
+		width: 100%;
+	}
+	#divRacionalResultado1,
+	#divRacionalResultado2{
+		float: left;
+		width: 50%;
+	}
+	#divRacionalResultado1{
+		left: 0px;
+	}
+	#divRacionalResultado2{
+		right: 0px;
+	}
+{% endblock %}

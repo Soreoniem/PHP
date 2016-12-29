@@ -1,0 +1,23 @@
+{% extends ":calculadora:index.html.twig" %}
+
+{% block titulo_head %}{{ parent() }} ► {{ titulo }}{% endblock %}
+
+{% block cabecera %}
+	<h1>
+		{% block cabecera_Titulo %}
+			<a href="{{ path('app_calculadora_index') }}">{{ parent() }}</a>
+		{% endblock %}
+		{% block cabecera_Titulo_RutaExtra %}
+			{{ parent() }} {{ titulo }}
+		{% endblock %}
+	</h1>
+{% endblock %}
+
+{% block contenedor %}
+	<form action="{{ path(action) }}" method="post">
+		<input autofocus type="number" name="operador1" placeholder="1r Operador" tabindex="1"/><br/>
+		{{ operando }}<br/>
+		<input type="number" name="operador2" placeholder="2º Operador" tabindex="2"/><br/>
+		<input type="submit" value="Aceptar" tabindex="3">
+	</form>
+{% endblock %}

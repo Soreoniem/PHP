@@ -41,13 +41,14 @@ abstract class Figura
     }
 
     public function esIgual(Figura $circulo22){
-        return ( $this->getOrigen()->esIgual( $circulo22->getOrigen() ) );
+        return $this->getOrigen()->esIgual( $circulo22->getOrigen() );
     }
 
     public static function getNumFiguras(){
         return self::$numFiguras;
     }
 
+    // Medotos que deben tener los hijos
     abstract public function area();
     abstract public function escalar($num);
     abstract public function perimetro();

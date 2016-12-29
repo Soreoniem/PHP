@@ -1,0 +1,98 @@
+{% extends ":usuario:index.html.twig" %}
+
+{% block titulo_head %}{{ parent() }} ► {{ titulo }}{% endblock %}
+
+{% block cabecera %}
+	<h1>
+		{% block cabecera_Titulo %}
+			<a href="{{ path('app_usuario_index') }}">{{ parent() }}</a>
+		{% endblock %}
+		{% block cabecera_Titulo_RutaExtra %}
+			{{ parent() }} {{ titulo }}
+		{% endblock %}
+	</h1>
+{% endblock %}
+
+
+{% block contenedor %}
+	<form id="formUsuario" action="{{ path(action, {"id": usuario.id}) }}" method="post">
+		<div id="formInfos">
+			<div class="formInfo">
+				Nombre:
+			</div>
+			<div class="formInfo">
+				email:
+			</div>
+			<div class="formInfo">
+				Contraseña:
+			</div>
+		</div>
+		<div id="formDatos">
+			<div class="formDato">
+				<input autofocus type="text" name="nombre" value="{{ usuario.nombre }}" tabindex="1"/>
+			</div>
+			<div class="formDato">
+				<input type="email" name="email" value="{{ usuario.email }}" tabindex="2"/>
+			</div>
+			<div class="formDato">
+				<input id="password" type="password" tipo="password" name="password" value="{{ usuario.password }}" tabindex="3" required/>
+				{% block html_mostrarPassword %}{{ parent() }}{% endblock %}
+			</div>
+		</div>
+		
+		<!-- Aceptar -->
+		<div id="formDivAceptar">
+			<input type="submit" value="Modificar" tabindex="4">
+		</div>
+	</form>
+{% endblock %}
+
+{% block JQuery_mostrarPassword %}{{ parent() }}{% endblock %}
+
+{% block estilos %}
+	#formInfos,
+	#formDatos{
+		float: left;
+	}
+	
+	#formInfos{
+		width: 45%;
+	}
+	
+	.formDato input{
+		text-align: left;
+		padding-left: 13px;
+	}
+	
+	#formDatos{
+		width: 55%;
+	}
+	
+	.formInfo,
+	.formDato{
+		padding: 5px 0px;
+		height: 40px;
+	}
+	
+	.formInfo{
+		padding-top:	10px	!important;
+		text-align:		right	!important;
+	}
+	
+	.formDato{
+		padding-top:	10px	!important;
+		text-align:		left	!important;
+	}
+	
+	#formDivAceptar{
+		float:			left;
+		margin-left:	48%;
+		margin-top:		10px;
+		margin-bottom:	5px;
+	}
+	
+	.mostrarPassword{
+		cursor:help;
+		font-size: 1.3em;
+	}
+{% endblock %}

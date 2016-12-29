@@ -2,82 +2,127 @@
 /**
  * Creado con PhpStorm.
  * Usuario: Juan Lux
- * Fecha: 28/10/2016
- * Hora: 17:27
+ * Fecha: 18/11/2016
+ * Hora: 17:28
  */
 
 namespace AppBundle\Service;
 
+use AppBundle\Service\RacionalService;
 
-class CalculadoraService {
+class CalculadoraService{
 //╔═════  ATRIBUTOS  ═════╗
-	/**
-	 * @var int $op1
-	 */
-	private $op1;
+	/** @var RacionalService $operador1 */
+	private $operador1;
 	
-	/**
-	 * @var int $op2
-	 */
-	private $op2;
+	/** @var RacionalService $operador2 */
+	private $operador2;
 	
-	/**
-	 * @var int $resultado
-	 */
+	/** @var RacionalService $resultado*/
 	private $resultado;
-
+	
 //╔═════  CONSTRUCTOR  ═════╗
-	/**
-	 * Calculadora constructor.
-	 * @param null $op1
-	 * @param null $op2
-	 */
-	public function __construct($op1 = null, $op2 = null){
-		$this->setOp1($op1)
-			->setOp2($op2);
+	// No requiere de constructor
+		// Las variables ya tienen su constructor
+	public function __construct(){
+		$this->operador1	= new RacionalService();
+		$this->operador2	= new RacionalService();
+		$this->resultado	= new RacionalService();
 	}
 
 //╔═════  GET | SET  ═════╗
-	public function getOp1(){
-		return $this->op1;
+	/**
+	 * @return RacionalService
+	 */
+	public function getOperador1(){
+		return $this->operador1;
 	}
-	public function getOp2(){
-		return $this->op2;
+	
+	/**
+	 * @return RacionalService
+	 */
+	public function getOperador2(){
+		return $this->operador2;
 	}
+	
+	/**
+	 * @return RacionalService
+	 */
 	public function getResultado(){
 		return $this->resultado;
 	}
 	
-	public function setOp1($numero){
-		$this->op1	= (int) $numero;
+	/**
+	 * @param RacionalService $racional
+	 * @return $this
+	 */
+	public function setOperador1($racional){
+		
+		$this->operador1
+			->setNumerador($racional->getNumerador())
+			->setDenominador($racional->getDenominador());
+		
 		return $this;
 	}
-	public function setOp2($numero){
-		$this->op2	= (int) $numero;
+	
+	/**
+	 * @param RacionalService $racional
+	 * @return $this
+	 */
+	public function setOperador2($racional){
+		$this->operador2
+			->setNumerador($racional->getNumerador())
+			->setDenominador($racional->getDenominador());
+		
 		return $this;
 	}
-	public function setResultado($numero){
-		$this->resultado	= (int) $numero;
+	
+	/**
+	 * @param RacionalService $racional
+	 * @return $this
+	 */
+	private function setResultado($racional){
+		$this->resultado
+			->setNumerador($racional->getNumerador())
+			->setDenominador($racional->getDenominador())
+			->reducirFraccion();
+		return $this;
 	}
 
 //╔═════  METODOS  ═════╗
 	public function sumar(){
-		$this->setResultado($this->getOp1() + $this->getOp2());
+		$numerador1		= $this->getOperador1()->getNumerador()		* $this->getOperador2()->getDenominador();
+		$numerador2		= $this->getOperador1()->getDenominador()	* $this->getOperador2()->getNumerador();
+		$denominador	= $this->getOperador1()->getDenominador()	* $this->getOperador2()->getDenominador();
+		
+		$this->setResultado(new RacionalService($numerador1 + $numerador2, $denominador));
 	}
 	
 	public function restar(){
-		$this->setResultado($this->getOp1() - $this->getOp2());
+		$denominador	= $this->getOperador1()->getDenominador() * $this->getOperador2()->getDenominador();
+		$numerador1		= ($denominador / $this->getOperador1()->getDenominador()) * $this->getOperador1()->getNumerador();
+		$numerador2		= ($denominador / $this->getOperador2()->getDenominador()) * $this->getOperador2()->getNumerador();
+		
+		$this->setResultado(new RacionalService($numerador1 - $numerador2, $denominador));
 	}
 	
 	public function multiplicar(){
-		$this->setResultado($this->getOp1() * $this->getOp2());
+		$numerador		= $this->getOperador1()->getNumerador()		* $this->getOperador2()->getNumerador();
+		$denominador	= $this->getOperador1()->getDenominador()	* $this->getOperador2()->getDenominador();
+		
+		$this->setResultado(new RacionalService($numerador, $denominador));
 	}
 	
-	public function dividir(){
-		if($this->op2 == 0){
-			$this->setResultado(0);
-		} else {
-			$this->setResultado($this->getOp1() / $this->getOp2());
-		}
+	public function dividir_Decimal(){
+		$numerador	= $this->getOperador1()->getNumerador() / $this->getOperador2()->getNumerador();
+		
+		$this->setResultado(new RacionalService($numerador, 1));
+	}
+	
+	public function dividir_Racional(){
+		$numerador		= $this->getOperador1()->getNumerador()		* $this->getOperador2()->getDenominador();
+		$denominador	= $this->getOperador1()->getDenominador()	* $this->getOperador2()->getNumerador();
+		
+		$this->setResultado(new RacionalService($numerador, $denominador));
 	}
 }
